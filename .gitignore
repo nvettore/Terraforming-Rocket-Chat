@@ -10,5 +10,9 @@
 *.pem
 
 #secrets files
+*.pem
+*.pub
 .rocketchat-priv
 .rocketchat-pub
+rocketchat-priv.pem
+rocketchat.pub

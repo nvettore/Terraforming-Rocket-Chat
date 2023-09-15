@@ -1,7 +1,6 @@
 # Configure the AWS Provider
 provider "aws" {
-  access_key = "${var.aws_access_key}"
-  secret_key = "${var.aws_secret_key}"
+  profile ="default"
   region     = "us-east-2"
 }
 
@@ -12,6 +11,15 @@ resource "aws_key_pair" "deployer" {
 
 data "aws_security_group" "security_group" {
   id = "${var.security_group}"
+
+}
+resource "aws_vpc" "main" {
+  cidr_block       = "10.0.0.0/16"
+  instance_tenancy = "default"
+
+  tags = {
+    Name = "rc-vpc"
+  }
 }
 
 #deploying an Ec2 instance
@@ -40,6 +48,7 @@ resource "aws_instance" "web" {
   provisioner "remote-exec" {
     connection {
       type        = "ssh"
+      host        = self.public_ip
       user        = "ubuntu"
       private_key = "${file(var.private_key)}"
       agent       = true
@@ -51,7 +60,7 @@ resource "aws_instance" "web" {
     ]
   }
 
-  tags {
+  tags = {
     Name = "RocketChat"
   }
 }
@@ -122,7 +131,7 @@ resource "aws_security_group" "Rocket_Chat_Security" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags {
+  tags = {
     Name = "Rocket_Chat_Security"
   }
 }
