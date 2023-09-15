@@ -8,3 +8,7 @@
 # .tfvars files
 *.tfvars
 *.pem
+
+#secrets files
+.rocketchat-priv
+.rocketchat-pub
