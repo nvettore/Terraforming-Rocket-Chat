@@ -14,3 +14,7 @@ variable "security_group" {
 variable "private_key" {
   default = "/home/nick/Desktop/aws/Terraforming-Rocket-Chat/rocketchat-priv.pem"
 }
+
+variable"ami_rocketchat" {
+  default = "ami-01fff7811ea402d67"
+}

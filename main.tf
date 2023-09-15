@@ -28,7 +28,7 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
+    values = ["ubuntu-minimal/images/hvm-ssd/ubuntu-focal-20.04-*"]
   }
 
   filter {
@@ -41,7 +41,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "web" {
   ami             = "${data.aws_ami.ubuntu.id}"
-  instance_type   = "t2.micro"
+  instance_type   = "t2.small"
   key_name        = "${aws_key_pair.deployer.key_name}"
   security_groups = ["${data.aws_security_group.security_group.name}"]
 
