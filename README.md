@@ -1,5 +1,7 @@
 # Terraform
 Automatically setting up a server and deploying web applications. 
+#update Nv
+
 
 1. Create a private key
     "$ openssl genpkey -algorithm RSA - out *secret_key.*pem -pkeyopt rsa_keygen_bits:2048"
