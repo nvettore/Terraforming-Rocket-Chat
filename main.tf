@@ -45,6 +45,12 @@ resource "aws_instance" "web" {
   key_name        = "${aws_key_pair.deployer.key_name}"
   security_groups = ["${data.aws_security_group.security_group.name}"]
 
+  ebs_block_device {
+    device_name = "/dev/sda1"
+    volume_size = 40
+  }
+
+
   provisioner "remote-exec" {
     connection {
       type        = "ssh"
@@ -55,8 +61,11 @@ resource "aws_instance" "web" {
     }
 
     inline = [
-      "sudo snap install rocketchat-server",
-      "sudo rocketchat-server.initcaddy",
+      "sudo apt update -y",
+      "sudo apt upgrade -y",
+      "curl -L https://get.docker.com | sh",
+      "sudo usermod -aG docker $USER",
+      "sudo reboot",
     ]
   }
 
@@ -64,6 +73,7 @@ resource "aws_instance" "web" {
     Name = "RocketChat"
   }
 }
+
 
 locals {
   this_id         = "${join(",", aws_instance.web.*.id)}"
